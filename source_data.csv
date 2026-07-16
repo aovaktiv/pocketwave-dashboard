@@ -1,7 +1,7 @@
 category,key,label,value,type,notes
 finance,cash,Cash on hand,1250000,number,Editable dashboard input
 finance,fixedOpex,Monthly fixed operating expense,220000,number,Editable dashboard input
-finance,marketing,Monthly marketing spend,172000,number,Editable dashboard input
+finance,marketing,Monthly marketing spend,170000,number,Validation update from 172000 to confirm source-data redeploy
 finance,softwareOpex,Monthly software operating expense,8255,number,Excludes live-service COGS
 hardware,hardwareContribution,Hardware contribution dollars,230900.3728,number,Return-adjusted contribution
 hardware,hardwareRevenue,Hardware net revenue,539274,number,Return-adjusted revenue
