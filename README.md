@@ -4,11 +4,15 @@ A public, editable finance and operations dashboard built from the PocketWave ca
 
 ## Public site
 
-Expected URL after GitHub Pages is enabled:
+Dashboard:
 
 `https://aovaktiv.github.io/pocketwave-dashboard/`
 
-One-time setup: open **Settings → Pages** in this repository and set the source to **GitHub Actions**. The included workflow deploys every push to `main`.
+Source-data editor:
+
+`https://aovaktiv.github.io/pocketwave-dashboard/editor.html`
+
+GitHub Pages is configured to deploy through GitHub Actions. The included workflow deploys every push to `main`.
 
 ## Files
 
