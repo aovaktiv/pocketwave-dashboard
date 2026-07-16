@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edit PocketWave Dashboard Data</title>
+<style>
+body{margin:0;background:#07111f;color:#f5f8fc;font-family:Inter,system-ui,sans-serif}.wrap{max-width:1180px;margin:auto;padding:24px}h1{margin-bottom:6px}.muted{color:#9db0c8}.bar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.btn{display:inline-block;border:1px solid #263a54;background:#13243a;color:#fff;padding:10px 14px;border-radius:9px;text-decoration:none;cursor:pointer;font-weight:700}.btn.primary{background:#6aa8ff;color:#07111f}table{width:100%;border-collapse:collapse;background:#0e1b2d;border:1px solid #263a54;border-radius:12px;overflow:hidden}th,td{padding:10px;border-bottom:1px solid #263a54;text-align:left;font-size:13px}th{color:#9db0c8;text-transform:uppercase;font-size:11px;letter-spacing:.06em}input{width:100%;background:#07111f;color:#fff;border:1px solid #35506e;border-radius:7px;padding:8px}.note{background:#13243a;border:1px solid #263a54;padding:14px;border-radius:10px;line-height:1.5;margin:16px 0}.status{margin-left:auto;color:#9db0c8;align-self:center}@media(max-width:700px){.hide{display:none}.wrap{padding:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Edit dashboard source data</h1>
+<div class="muted">Change values, preview them locally, then download the updated CSV and replace <code>source_data.csv</code> in GitHub.</div>
+<div class="note"><strong>Publishing workflow:</strong> changes made here stay in your browser until you download the CSV and commit it to the repository. The public dashboard reloads the hosted CSV on every visit.</div>
+<div class="bar">
+<a class="btn" href="index.html">Back to dashboard</a>
+<button class="btn" id="reload">Reload current CSV</button>
+<button class="btn" id="preview">Preview locally</button>
+<button class="btn primary" id="download">Download updated CSV</button>
+<span class="status" id="status"></span>
+</div>
+<table>
+<thead><tr><th>Category</th><th>Metric</th><th>Value</th><th class="hide">Notes</th></tr></thead>
+<tbody id="rows"></tbody>
+</table>
+</div>
+<script>
+let data=[];
+const qs=s=>document.querySelector(s);
+function parseCSV(text){const lines=text.replace(/\r/g,'').split('\n').filter(Boolean);const p=line=>{const o=[];let c='',q=false;for(let i=0;i<line.length;i++){const h=line[i];if(h==='"'){if(q&&line[i+1]==='"'){c+='"';i++;}else q=!q;}else if(h===','&&!q){o.push(c);c='';}else c+=h;}o.push(c);return o};const head=p(lines[0]);return lines.slice(1).map(l=>{const v=p(l),r={};head.forEach((h,i)=>r[h]=v[i]??'');return r})}
+function esc(v){v=String(v??'');return /[",\n]/.test(v)?'"'+v.replaceAll('"','""')+'"':v}
+function csv(){const h=['category','key','label','value','type','notes'];return [h.join(','),...data.map(r=>h.map(k=>esc(r[k])).join(','))].join('\n')+'\n'}
+function render(){qs('#rows').innerHTML=data.map((r,i)=>`<tr><td>${r.category}</td><td><strong>${r.label}</strong><div class="muted">${r.key}</div></td><td><input data-i="${i}" value="${r.value}"></td><td class="hide muted">${r.notes||''}</td></tr>`).join('');document.querySelectorAll('input').forEach(x=>x.oninput=e=>data[Number(e.target.dataset.i)].value=e.target.value)}
+async function load(){try{const r=await fetch('source_data.csv?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error();data=parseCSV(await r.text());render();qs('#status').textContent='Loaded '+data.length+' inputs'}catch(e){qs('#status').textContent='Could not load CSV'}}
+qs('#reload').onclick=load;
+qs('#preview').onclick=()=>{localStorage.setItem('pocketwave_source_preview',csv());location.href='index.html?preview=1'};
+qs('#download').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv()],{type:'text/csv'}));a.download='source_data.csv';a.click();URL.revokeObjectURL(a.href);qs('#status').textContent='Downloaded source_data.csv'};
+load();
+</script>
+</body>
+</html>
