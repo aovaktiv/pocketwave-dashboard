@@ -1,0 +1,26 @@
+category,key,label,value,type,notes
+finance,cash,Cash on hand,1250000,number,Editable dashboard input
+finance,fixedOpex,Monthly fixed operating expense,220000,number,Editable dashboard input
+finance,marketing,Monthly marketing spend,172000,number,Editable dashboard input
+finance,softwareOpex,Monthly software operating expense,8255,number,Excludes live-service COGS
+hardware,hardwareContribution,Hardware contribution dollars,230900.3728,number,Return-adjusted contribution
+hardware,hardwareRevenue,Hardware net revenue,539274,number,Return-adjusted revenue
+subscription,activeSubscribers,Average active paying subscribers,11865,number,Same period as vendor costs
+subscription,subscriptionPrice,Monthly subscription price,9.99,number,Gross customer price
+subscription,appFeePct,App-store fee percentage,0.20,number,Decimal format
+subscription,avgMinutes,Average transcription minutes per subscriber,158.4492204,number,1880000 divided by 11865
+subscription,avgRequests,Average AI requests per subscriber,79.2246102,number,940000 divided by 11865
+subscription,transcriptionRate,Transcription cost per minute,0.013856383,number,26050 divided by 1880000
+subscription,aiRate,AI cost per request,0.01,number,9400 divided by 940000
+subscription,otherServicePerSub,Other live-service cost per subscriber,0.6219975,number,Production service costs excluding transcription and AI
+forecast,demandGrowth,Next-month demand growth,0.08,number,Decimal format
+forecast,juneShipments,June gross hardware shipments,4680,number,Units
+forecast,demandMix.Black,Black demand mix,0.58,number,Decimal format
+forecast,demandMix.White,White demand mix,0.27,number,Decimal format
+forecast,demandMix.Sand,Sand demand mix,0.15,number,Decimal format
+inventory,inventory.Black,Saleable owned Black units,2000,number,Late inbound excluded
+inventory,inventory.White,Saleable owned White units,2835,number,Late inbound excluded
+inventory,inventory.Sand,Saleable owned Sand units,3100,number,Late inbound excluded
+channels,channelMargins.Shopify,Shopify contribution margin,0.452,number,Decimal format
+channels,channelMargins.Amazon,Amazon contribution margin,0.394,number,Decimal format
+channels,channelMargins.Walmart,Walmart contribution margin,0.392,number,Decimal format
